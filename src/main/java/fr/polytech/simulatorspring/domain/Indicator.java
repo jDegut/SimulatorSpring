@@ -7,17 +7,22 @@ import lombok.Data;
 @Entity
 @Table(name = "indicator")
 public class Indicator {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false)
+	private Integer id;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @Column(name = "wording")
-    private String wording;
-    @Column(name = "valueIfCheck")
-    private int valueIfCheck;
-    @Column(name = "valueIfUnCheck")
-    private int valueIfUncheck;
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "fk_action", nullable = false)
+	private Action fkAction;
 
-    @ManyToOne
-    private Action action;
+	@Column(name = "wording", length = 50)
+	private String wording;
+
+	@Column(name = "valueIfCheck")
+	private Integer valueIfCheck;
+
+	@Column(name = "valueIfUnCheck")
+	private Integer valueIfUnCheck;
+
 }

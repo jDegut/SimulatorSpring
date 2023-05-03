@@ -3,39 +3,23 @@ package fr.polytech.simulatorspring.domain;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.List;
-
 @Data
 @Entity
 @Table(name = "action")
 public class Action {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false)
+	private Integer id;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @Column(name = "wording")
-    private String wording;
-    @Column(name = "scoreMinimum")
-    private int scoreMinimum;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "fk_action")
+	private Action fkAction;
 
-    @OneToOne
-    @JoinColumn(name = "fk_action")
-    private Action previousAction;
+	@Column(name = "wording", length = 25)
+	private String wording;
 
-    @ManyToOne
-    @JoinTable(
-            name = "action__mission",
-            joinColumns = @JoinColumn(name = "fk_action"))
-    private Mission mission;
-
-    @ManyToMany
-    @JoinTable(
-            name = "inscription__action",
-            joinColumns = @JoinColumn(name = "fk_action"))
-    private List<Inscription> inscriptions;
-
-    @OneToMany
-    @JoinColumn(name = "fk_action")
-    private List<Indicator> indicators;
+	@Column(name = "scoreMinimum")
+	private Integer scoreMinimum;
 
 }
