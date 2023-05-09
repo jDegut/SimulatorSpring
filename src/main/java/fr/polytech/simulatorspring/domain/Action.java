@@ -19,7 +19,7 @@ public class Action {
 	@Column(name = "wording", length = 25)
 	private String wording;
 
-	@Column(name = "scoreMinimum")
+	@Column(name = "score_minimum")
 	private Integer scoreMinimum;
 
 }

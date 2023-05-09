@@ -19,10 +19,10 @@ public class Indicator {
 	@Column(name = "wording", length = 50)
 	private String wording;
 
-	@Column(name = "valueIfCheck")
+	@Column(name = "value_if_check")
 	private Integer valueIfCheck;
 
-	@Column(name = "valueIfUnCheck")
+	@Column(name = "value_if_uncheck")
 	private Integer valueIfUnCheck;
 
 }

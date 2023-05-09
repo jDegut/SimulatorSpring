@@ -8,17 +8,17 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "utilisateur")
-public class Utilisateur {
+@Table(name = "user")
+public class User {
 	@Id
-	@Column(name = "NumUtil", nullable = false)
+	@Column(name = "id", nullable = false)
 	private Integer id;
 
-	@Column(name = "NomUtil", nullable = false, length = 100)
-	private String nomUtil;
+	@Column(name = "username", nullable = false, length = 100)
+	private String username;
 
-	@Column(name = "MotPasse", nullable = false, length = 100)
-	private String motPasse;
+	@Column(name = "password", nullable = false, length = 100)
+	private String password;
 
 	@Column(name = "salt", nullable = false, length = 100)
 	private String salt;

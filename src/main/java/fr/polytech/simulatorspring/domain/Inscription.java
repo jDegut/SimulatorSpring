@@ -16,7 +16,7 @@ public class Inscription {
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "fk_user", nullable = false)
-	private Utilisateur fkUser;
+	private User fkUser;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "fk_mission", nullable = false)
