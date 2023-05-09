@@ -1,4 +1,4 @@
-package fr.polytech.simulatorspring.security.payloads;
+package fr.polytech.simulatorspring.dto;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ public class JwtResponse {
 	private String type = "Bearer";
 	private Integer id;
 	private String username;
-	private List<String> roles;
+	private final List<String> roles;
 
 	public JwtResponse(String accessToken, Integer id, String username, List<String> roles) {
 		this.token = accessToken;
