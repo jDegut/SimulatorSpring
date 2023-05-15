@@ -6,6 +6,7 @@ import fr.polytech.simulatorspring.service.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -29,6 +30,7 @@ public class UserController {
 	}
 
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasRole('admin')")
 	public void deleteUser(@PathVariable Integer id) {
 		try {
 			userService.deleteUser(id);

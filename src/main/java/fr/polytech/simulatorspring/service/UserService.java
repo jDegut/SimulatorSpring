@@ -5,7 +5,10 @@ import fr.polytech.simulatorspring.dto.UserDto;
 import fr.polytech.simulatorspring.exception.UserException;
 import fr.polytech.simulatorspring.mapper.UserMapper;
 import fr.polytech.simulatorspring.repository.UserRepository;
+import fr.polytech.simulatorspring.security.service.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,6 +22,11 @@ public class UserService implements IUserService{
 
 	@Override
 	public UserDto updateUser(UserDto userDto) throws UserException {
+
+		UserDetails userAuthenticated = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (!userAuthenticated.getUsername().equals(userDto.getUsername()))
+			throw new UserException("You can't update this user");
+
 		User user = userRepository.findById(userDto.getId())
 				.orElseThrow(() -> new UserException("User not found"));
 		user.setPassword(Utils.cryptPassword(userDto.getPassword()));
