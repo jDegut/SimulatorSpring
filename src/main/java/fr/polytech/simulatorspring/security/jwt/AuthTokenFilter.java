@@ -5,6 +5,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,9 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+		HttpSession session = request.getSession();
 		try {
-			String jwt = jwtTokenUtils.parseJwt(request);
+			String jwt = jwtTokenUtils.parseJwt(session);
 			if (jwt != null && jwtTokenUtils.validateJwtToken(jwt)) {
 				String username = jwtTokenUtils.getUserNameFromJwtToken(jwt);
 
@@ -43,7 +45,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 			}
 		} catch (Exception e) {
-			logger.error("Impossible d'établir l'authentification de l'utilisateur : {}", e);
+			logger.error("Impossible d'établir l'authentification de l'utilisateur : {e}", e);
 		}
 		filterChain.doFilter(request, response);
 	}

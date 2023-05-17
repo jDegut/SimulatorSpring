@@ -18,9 +18,6 @@ public class User {
 	@Column(name = "password", nullable = false, length = 100)
 	private String password;
 
-	@Column(name = "salt", nullable = false, length = 100)
-	private String salt;
-
 	@Column(name = "role", nullable = false, length = 100)
 	private String role;
 

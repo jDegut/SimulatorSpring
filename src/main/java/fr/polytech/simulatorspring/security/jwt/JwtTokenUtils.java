@@ -3,6 +3,7 @@ package fr.polytech.simulatorspring.security.jwt;
 import fr.polytech.simulatorspring.security.service.UserDetailsImpl;
 import io.jsonwebtoken.*;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,8 +26,8 @@ public class JwtTokenUtils {
 	@Value("${app.jwt.expiration}")
 	private int jwtExpirationMs;
 
-	public String parseJwt(HttpServletRequest request) {
-		String headerAuth = request.getHeader("Authorization");
+	public String parseJwt(HttpSession session) {
+		String headerAuth = (String) session.getAttribute("Authorization");
 		if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {
 			return headerAuth.substring(7);
 		}

@@ -22,7 +22,6 @@ public class UserService implements IUserService{
 		User user = userRepository.findById(userDto.getId())
 				.orElseThrow(() -> new UserException("User not found"));
 		user.setPassword(Utils.cryptPassword(userDto.getPassword()));
-		user.setSalt(userDto.getSalt());
 		user.setRole(userDto.getRole());
 		user.setEmail(userDto.getEmail());
 		user.setForename(userDto.getForename());

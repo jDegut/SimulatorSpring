@@ -1,14 +1,9 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: jdegu
-  Date: 15/05/2023
-  Time: 10:09
-  To change this template use File | Settings | File Templates.
---%>
-<%@page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="header.jsp" %>
-<body>
-    <h1>Page d'accueil</h1>
-</body>
-<%@include file="footer.jsp" %>
+<%@page contentType="text/html;charset=UTF-8"%>
+<html>
+    <%@include file="header.jsp" %>
+    <body>
+        <%@include file="navbar.jsp"%>
+        <p>Bienvenue sur la page d'accueil (c'est la seule aussi)</p>
+    </body>
+    <%@include file="footer.jsp" %>
 </html>

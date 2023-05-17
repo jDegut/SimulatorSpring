@@ -64,7 +64,6 @@ public class AuthService implements IAuthService {
 		User user = userMapper.toEntity(userDto);
 		user.setPassword(Utils.cryptPassword(userDto.getPassword()));
 		user.setRole("learner");
-		user.setSalt("");
 		userRepository.save(user);
 
 		return authenticateUser(userDto);
