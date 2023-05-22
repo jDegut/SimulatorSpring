@@ -5,7 +5,7 @@
         <%@include file="navbar.jsp"%>
         <div class="container-fluid">
             <div class="alert alert-danger" role="alert">
-                Vous devez être connecté afin d'accéder à cette ressource
+                ${message}
             </div>
         </div>
     </body>

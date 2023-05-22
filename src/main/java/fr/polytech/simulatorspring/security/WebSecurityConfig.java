@@ -11,6 +11,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -50,17 +51,25 @@ public class WebSecurityConfig {
 	}
 
 	@Bean
+	public WebSecurityCustomizer webSecurityCustomizer() {
+		return (web) -> web.ignoring().requestMatchers("/resources/**");
+	}
+
+	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable()
 				.authorizeHttpRequests()
-				.shouldFilterAllDispatcherTypes(false)
-				.requestMatchers("/", "/auth","/login", "/register", "/resources/**").permitAll()
-				.anyRequest().authenticated()
+					.shouldFilterAllDispatcherTypes(false)
+					.requestMatchers("/", "/auth","/login", "/register").permitAll()
+					.anyRequest().authenticated()
 				.and()
-				.logout().logoutSuccessUrl("/")
+					.logout().logoutSuccessUrl("/")
 				.and()
-				.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+					.exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+				.and()
+					.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+						.maximumSessions(1)
+						.maxSessionsPreventsLogin(true);
 
 		http.authenticationProvider(authenticationProvider());
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);

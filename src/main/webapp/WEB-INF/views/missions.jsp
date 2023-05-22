@@ -29,7 +29,7 @@
                                     </c:forEach>
                                 </td>
                                 <sec:authorize access="hasAuthority('admin')">
-                                    <td><a class="btn btn-primary" href="#" role="button">Modifier</a></td>
+                                    <td><a class="btn btn-outline-primary" href="#" role="button">Modifier</a></td>
                                     <td><a class="btn btn-danger" href="#" role="button">Supprimer</a></td>
                                 </sec:authorize>
                             </tr>

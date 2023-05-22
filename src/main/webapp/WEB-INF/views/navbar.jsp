@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<nav class="navbar navbar-expand-lg bg-body-tertiary py-3">
+<nav class="navbar navbar-expand-lg py-4" style="background-color: darkgray">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">
+        <a class="navbar-brand" href="${pageContext.request.contextPath}/">
             <img src="${pageContext.request.contextPath}/resources/img/logo-polytech.png" alt="Logo" height="24" class="d-inline-block align-text-top">
             Simulator Spring
         </a>
@@ -46,6 +46,9 @@
                             </ul>
                         </li>
                     </sec:authorize>
+                    <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/user/me">Mon compte</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="${pageContext.request.contextPath}/logout">Se déconnecter</a>
                     </li>

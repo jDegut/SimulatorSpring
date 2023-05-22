@@ -2,10 +2,12 @@ package fr.polytech.simulatorspring.service;
 
 import fr.polytech.simulatorspring.domain.User;
 import fr.polytech.simulatorspring.dto.UserDto;
+import fr.polytech.simulatorspring.dto.UserUpdateRequest;
 import fr.polytech.simulatorspring.exception.UserException;
 import fr.polytech.simulatorspring.mapper.UserMapper;
 import fr.polytech.simulatorspring.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,14 +20,20 @@ public class UserService implements IUserService{
 	private UserMapper userMapper;
 
 	@Override
-	public UserDto updateUser(UserDto userDto) throws UserException {
-		User user = userRepository.findById(userDto.getId())
+	public UserDto getUser(UserDetails userDetails) throws UserException {
+		User user = userRepository.findByUsername(userDetails.getUsername())
 				.orElseThrow(() -> new UserException("User not found"));
-		user.setPassword(Utils.cryptPassword(userDto.getPassword()));
-		user.setRole(userDto.getRole());
-		user.setEmail(userDto.getEmail());
-		user.setForename(userDto.getForename());
-		user.setSurname(userDto.getSurname());
+		return userMapper.toDto(user);
+	}
+
+	@Override
+	public UserDto updateUser(UserUpdateRequest userUpdateRequest) throws UserException {
+		User user = userRepository.findById(userUpdateRequest.getId())
+				.orElseThrow(() -> new UserException("User not found"));
+		System.out.println(Utils.comparePassword(userUpdateRequest.getOldPassword(), user.getPassword()));
+		if(!Utils.comparePassword(userUpdateRequest.getOldPassword(), user.getPassword()))
+			return null;
+		user.setPassword(Utils.cryptPassword(userUpdateRequest.getNewPassword()));
 		userRepository.save(user);
 		return userMapper.toDto(user);
 	}
