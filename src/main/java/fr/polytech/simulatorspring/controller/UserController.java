@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
@@ -33,14 +34,19 @@ public class UserController {
 
 	@GetMapping("/me")
 	public ModelAndView getUser() {
-		UserDetails user = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		UserDto userDto = null;
 		try {
-			userDto = userService.getUser(user);
+			userDto = userService.getUser();
 		} catch (UserException e) {
 			logger.error(e.getMessage());
 		}
 		return new ModelAndView("user").addObject("user", userDto);
+	}
+
+	@GetMapping
+	public ModelAndView getUsers() {
+		List<UserDto> users = userService.getUsers();
+		return new ModelAndView("learner").addObject("learners", users);
 	}
 
 	@PostMapping
@@ -63,13 +69,15 @@ public class UserController {
 		return new ModelAndView(new RedirectView("/user/me"));
 	}
 
-	@DeleteMapping("/{id}")
-	public void deleteUser(@PathVariable Integer id) {
+	@GetMapping("/delete/{id}")
+	public ModelAndView deleteUser(@PathVariable Integer id) {
 		try {
 			userService.deleteUser(id);
+
 		} catch (UserException e) {
 			logger.error(e.getMessage());
 		}
+		return new ModelAndView(new RedirectView("/user"));
 	}
 
 }

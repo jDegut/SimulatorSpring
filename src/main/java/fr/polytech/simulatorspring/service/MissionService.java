@@ -29,10 +29,30 @@ public class MissionService implements IMissionService{
 		List<MissionDto> missionDtos = new ArrayList<>();
 		for (Mission mission : missions) {
 			MissionDto missionDto = missionMapper.toDto(mission);
-			List<ActionDto> actionDtos = actionService.getAllActionByMission(mission);
+			List<ActionDto> actionDtos = actionService.getAllActionByMission(missionDto);
 			missionDto.setActions(actionDtos);
 			missionDtos.add(missionDto);
 		}
 		return missionDtos;
+	}
+
+	@Override
+	public MissionDto findMissionById(int id) {
+		Mission mission = missionRepository.findById(id).orElse(null);
+		MissionDto missionDto = missionMapper.toDto(mission);
+		List<ActionDto> actionDtos = actionService.getAllActionByMission(missionDto);
+		missionDto.setActions(actionDtos);
+		return missionDto;
+	}
+
+	@Override
+	public void addToMission(int id, ActionDto actionDto) {
+		Mission mission = missionRepository.findById(id).orElse(null);
+		actionService.addToMission(mission, actionDto);
+	}
+
+	@Override
+	public void deleteMission(int id) {
+		missionRepository.deleteById(id);
 	}
 }

@@ -6,6 +6,8 @@ import fr.polytech.simulatorspring.exception.AuthException;
 
 public interface IAuthService {
 
+	boolean isAuth();
+
 	JwtResponse authenticateUser(UserDto userDto);
 
 	JwtResponse createUser(UserDto userDto) throws AuthException;

@@ -35,6 +35,12 @@ public class AuthService implements IAuthService {
 	private JwtTokenUtils jwtTokenUtils;
 
 	@Override
+	public boolean isAuth() {
+		return SecurityContextHolder.getContext().getAuthentication().isAuthenticated()
+				&& !SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals("anonymousUser");
+	}
+
+	@Override
 	public JwtResponse authenticateUser(UserDto userDto) {
 
 		Authentication authentication = authenticationManager.authenticate(

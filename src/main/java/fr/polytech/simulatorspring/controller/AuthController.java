@@ -20,6 +20,8 @@ public class AuthController {
 
 	@GetMapping("/auth")
 	public ModelAndView auth() {
+		if(authService.isAuth())
+			return new ModelAndView(new RedirectView("/"));
 		return new ModelAndView("auth");
 	}
 
