@@ -10,4 +10,5 @@ import java.util.List;
 public interface InscriptionActionRepository extends JpaRepository<InscriptionAction, Integer> {
 
     List<InscriptionAction> findAllByFkInscriptionIn(Collection<Inscription> fkInscription);
+
 }

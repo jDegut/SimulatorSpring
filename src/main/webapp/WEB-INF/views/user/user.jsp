@@ -1,9 +1,9 @@
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <%@page contentType="text/html;charset=UTF-8"%>
 <html>
-<%@include file="header.jsp" %>
+<%@include file="../rsrc/header.jsp" %>
 <body>
-<%@include file="navbar.jsp"%>
+<%@include file="../rsrc/navbar.jsp"%>
 <div class="container-fluid py-3">
     <h2>Mon compte</h2>
     <div class="row py-3 justify-content-center" style="background-color: snow">
@@ -52,5 +52,5 @@
     </div>
 </div>
 </body>
-<%@include file="footer.jsp" %>
+<%@include file="../rsrc/footer.jsp" %>
 </html>

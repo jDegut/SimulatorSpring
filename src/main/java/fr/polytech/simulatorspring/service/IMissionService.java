@@ -13,6 +13,8 @@ public interface IMissionService {
 
 	void addToMission(int id, ActionDto actionDto);
 
-	void deleteMission(int id);
+    void removeAction(int missionId, int actionId);
+
+    void deleteMission(int id);
 
 }

@@ -1,12 +1,10 @@
 package fr.polytech.simulatorspring.controller;
 
-import fr.polytech.simulatorspring.domain.Action;
 import fr.polytech.simulatorspring.dto.ActionDto;
 import fr.polytech.simulatorspring.dto.MissionDto;
 import fr.polytech.simulatorspring.service.ActionService;
 import fr.polytech.simulatorspring.service.MissionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,20 +26,25 @@ public class MissionController {
 	@GetMapping
 	public ModelAndView listAllMissions() {
 		List<MissionDto> missionDtos = missionService.findAllMissions();
-		return new ModelAndView("missions").addObject("missions", missionDtos);
+		return new ModelAndView("mission/missions").addObject("missions", missionDtos);
 	}
 
 	@GetMapping("/modify/{id}")
 	public ModelAndView modifyMission(@PathVariable int id) {
 		MissionDto missionDto = missionService.findMissionById(id);
 		List<ActionDto> actionDtos = actionService.getAllOtherActionByMission(missionDto);
-		return new ModelAndView("modifyMission").addObject("mission", missionDto).addObject("otherActions", actionDtos);
+		return new ModelAndView("mission/modifyMission").addObject("mission", missionDto).addObject("otherActions", actionDtos);
 	}
 
 	@PostMapping("/{id}/action/add")
 	public ModelAndView addActionToMission(@PathVariable int id, @ModelAttribute ActionDto actionDto) {
-		System.out.println(actionDto.getId());
 		missionService.addToMission(id, actionDto);
+		return new ModelAndView(new RedirectView("/mission"));
+	}
+
+	@GetMapping("/{id}/remove/{actionId}")
+	public ModelAndView removeActionToMission(@PathVariable int id, @PathVariable int actionId, @ModelAttribute ActionDto actionDto) {
+		missionService.removeAction(id, actionId);
 		return new ModelAndView(new RedirectView("/mission"));
 	}
 

@@ -22,7 +22,7 @@ public class AuthController {
 	public ModelAndView auth() {
 		if(authService.isAuth())
 			return new ModelAndView(new RedirectView("/"));
-		return new ModelAndView("auth");
+		return new ModelAndView("user/auth");
 	}
 
 	@PostMapping("/login")

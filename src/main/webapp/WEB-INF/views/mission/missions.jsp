@@ -1,8 +1,8 @@
 <%@page contentType="text/html;charset=UTF-8"%>
             <html>
-    <%@include file="header.jsp" %>
+    <%@include file="../rsrc/header.jsp" %>
     <body>
-    <%@include file="navbar.jsp"%>
+    <%@include file="../rsrc/navbar.jsp"%>
         <div class="container-fluid py-3">
             <h2>Liste des missions</h2>
             <div class="mt-3">
@@ -30,7 +30,7 @@
                                 </td>
                                 <sec:authorize access="hasAuthority('admin')">
                                     <td><a class="btn btn-outline-primary" href="/mission/modify/${mission.id}" role="button">Modifier</a></td>
-                                    <td><a class="btn btn-danger" href="#" role="button">Supprimer</a></td>
+                                    <td><a class="btn btn-danger" href="/mission/delete/${mission.id}" role="button">Supprimer</a></td>
                                 </sec:authorize>
                             </tr>
                         </c:forEach>
@@ -39,5 +39,5 @@
             </div>
         </div>
     </body>
-    <%@include file="footer.jsp" %>
+    <%@include file="../rsrc/footer.jsp" %>
 </html>

@@ -1,9 +1,9 @@
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <%@page contentType="text/html;charset=UTF-8"%>
 <html>
-<%@include file="header.jsp" %>
+<%@include file="../rsrc/header.jsp" %>
 <body>
-<%@include file="navbar.jsp"%>
+<%@include file="../rsrc/navbar.jsp"%>
     <div class="container-fluid py-3">
         <h2>Mission : ${mission.wording}</h2>
         <div class="mt-3">
@@ -36,8 +36,7 @@
             <form action="/mission/${mission.id}/action/add" method="post" class="ms-3">
                 <c:forEach var="newAction" items="${otherActions}">
                     <div class="form-check">
-                        <input type="hidden" name="id" value="${newAction.id}">
-                        <input class="form-check-input" type="radio" name="wording" id="newActionCheck">
+                        <input class="form-check-input" type="radio" name="id" id="newActionCheck" value="${newAction.id}">
                         <label class="form-check-label" for="newActionCheck">
                             ${newAction.wording} - ${newAction.scoreMinimum}
                         </label>
@@ -49,5 +48,5 @@
         </c:if>
     </div>
 </body>
-<%@include file="footer.jsp" %>
+<%@include file="../rsrc/footer.jsp" %>
 </html>

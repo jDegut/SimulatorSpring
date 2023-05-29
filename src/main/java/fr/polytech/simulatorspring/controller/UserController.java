@@ -3,24 +3,17 @@ package fr.polytech.simulatorspring.controller;
 import fr.polytech.simulatorspring.dto.UserDto;
 import fr.polytech.simulatorspring.dto.UserUpdateRequest;
 import fr.polytech.simulatorspring.exception.UserException;
-import fr.polytech.simulatorspring.security.service.UserDetailsImpl;
 import fr.polytech.simulatorspring.service.IUserService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @CrossOrigin
@@ -40,13 +33,13 @@ public class UserController {
 		} catch (UserException e) {
 			logger.error(e.getMessage());
 		}
-		return new ModelAndView("user").addObject("user", userDto);
+		return new ModelAndView("user/user").addObject("user", userDto);
 	}
 
 	@GetMapping
 	public ModelAndView getUsers() {
 		List<UserDto> users = userService.getUsers();
-		return new ModelAndView("learner").addObject("learners", users);
+		return new ModelAndView("learner/learner").addObject("learners", users);
 	}
 
 	@PostMapping

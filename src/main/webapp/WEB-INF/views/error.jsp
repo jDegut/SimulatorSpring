@@ -1,13 +1,13 @@
 <%@page contentType="text/html;charset=UTF-8"%>
 <html>
-    <%@include file="header.jsp" %>
+    <%@include file="rsrc/header.jsp" %>
     <body>
-        <%@include file="navbar.jsp"%>
+        <%@include file="rsrc/navbar.jsp"%>
         <div class="container-fluid">
-            <div class="alert alert-danger" role="alert">
+            <div class="alert alert-danger mt-3" role="alert">
                 ${message}
             </div>
         </div>
     </body>
-    <%@include file="footer.jsp" %>
+    <%@include file="rsrc/footer.jsp" %>
 </html>
