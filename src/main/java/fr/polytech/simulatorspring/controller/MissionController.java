@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -27,6 +28,18 @@ public class MissionController {
 	public ModelAndView listAllMissions() {
 		List<MissionDto> missionDtos = missionService.findAllMissions();
 		return new ModelAndView("mission/missions").addObject("missions", missionDtos);
+	}
+
+	@GetMapping("/create")
+	public ModelAndView createMission() {
+		List<ActionDto> actionDtos = actionService.getAllActions();
+		return new ModelAndView("mission/createMission").addObject("actions", actionDtos);
+	}
+
+	@PostMapping("/create")
+	public ModelAndView createMission(@ModelAttribute MissionDto missionDto, @RequestParam("actionList")List<Integer> actionIds) {
+		missionService.createMission(missionDto, actionIds);
+		return new ModelAndView(new RedirectView("/mission"));
 	}
 
 	@GetMapping("/modify/{id}")

@@ -34,12 +34,21 @@ public class AuthService implements IAuthService {
 	@Autowired
 	private JwtTokenUtils jwtTokenUtils;
 
+	/**
+	 * Check if the user is authenticated
+	 * @return
+	 */
 	@Override
 	public boolean isAuth() {
 		return SecurityContextHolder.getContext().getAuthentication().isAuthenticated()
 				&& !SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals("anonymousUser");
 	}
 
+	/**
+	 * Authenticate a user via JwtResponse (dto)
+	 * @param userDto
+	 * @return
+	 */
 	@Override
 	public JwtResponse authenticateUser(UserDto userDto) {
 
@@ -60,6 +69,12 @@ public class AuthService implements IAuthService {
 				roles);
 	}
 
+	/**
+	 * Create a new user and authenticate it
+	 * @param userDto
+	 * @return
+	 * @throws AuthException
+	 */
 	@Override
 	public JwtResponse createUser(UserDto userDto) throws AuthException {
 		if (userDto.getEmail() == null || userDto.getForename() == null || userDto.getSurname() == null)

@@ -11,6 +11,10 @@ public interface IUserService {
 
 	UserDto getUser() throws UserException;
 
+	UserDto getUserById(int id) throws UserException;
+
+	UserDto updateRole(UserUpdateRequest userUpdateRequest) throws UserException;
+
 	List<UserDto> getUsers();
 
 	UserDto updateUser(UserUpdateRequest userUpdateRequest) throws UserException;

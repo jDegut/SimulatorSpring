@@ -39,7 +39,7 @@ public class UserController {
 	@GetMapping
 	public ModelAndView getUsers() {
 		List<UserDto> users = userService.getUsers();
-		return new ModelAndView("learner/learner").addObject("learners", users);
+		return new ModelAndView("user/userList").addObject("users", users);
 	}
 
 	@PostMapping
@@ -60,6 +60,27 @@ public class UserController {
 		redirectAttributes.addFlashAttribute("modif", modif);
 		redirectAttributes.addFlashAttribute("isChanged", isChanged);
 		return new ModelAndView(new RedirectView("/user/me"));
+	}
+
+	@GetMapping("/modify/{id}")
+	public ModelAndView modifyUser(@PathVariable Integer id) {
+		UserDto userDto;
+		try {
+			userDto = userService.getUserById(id);
+		} catch (UserException e) {
+			throw new RuntimeException(e);
+		}
+		return new ModelAndView("user/modifyUser").addObject("user", userDto);
+	}
+
+	@PostMapping("/role")
+	public ModelAndView updateRole(@ModelAttribute UserUpdateRequest userUpdateRequest) {
+		try {
+			userService.updateRole(userUpdateRequest);
+		} catch (UserException e) {
+			throw new RuntimeException(e);
+		}
+		return new ModelAndView(new RedirectView("/user"));
 	}
 
 	@GetMapping("/delete/{id}")

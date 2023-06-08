@@ -19,6 +19,12 @@ public class InscriptionService implements IInscriptionService{
     @Autowired
     private InscriptionActionRepository inscriptionActionRepository;
 
+    /**
+     * Delete all inscriptions of a user (to delete a mission)
+     * 1 - Delete all inscriptionAction of the user
+     * 2 - Delete all inscriptions of the user
+     * @param idUser
+     */
     @Override
     public void deleteUserInscriptions(int idUser) {
         List<Inscription> inscriptions = inscriptionRepository.findAllByFkUser_Id(idUser);
@@ -27,6 +33,12 @@ public class InscriptionService implements IInscriptionService{
         inscriptionRepository.deleteAllInBatch(inscriptions);
     }
 
+    /**
+     * Delete all inscriptions of a mission (to delete a mission)
+     * 1 - Delete all inscriptionAction of the mission
+     * 2 - Delete all inscriptions of the mission
+     * @param mission
+     */
     @Override
     public void deleteMissionInscriptions(Mission mission) {
         List<Inscription> inscriptions = inscriptionRepository.findAllByFkMission(mission);

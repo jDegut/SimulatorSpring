@@ -9,7 +9,11 @@ import java.util.List;
 
 public interface IActionService {
 
-	List<ActionDto> getAllActionByMission(MissionDto missionDto);
+    List<ActionDto> getAllActions();
+
+    List<ActionDto> getAllActionsById(List<Integer> ids);
+
+    List<ActionDto> getAllActionByMission(MissionDto missionDto);
 
 	List<ActionDto> getAllOtherActionByMission(MissionDto missionDto);
 

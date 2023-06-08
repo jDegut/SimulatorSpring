@@ -10,4 +10,5 @@ public class UserUpdateRequest implements Serializable {
 	private final String oldPassword;
 	private final String newPassword;
 	private final String newPassword2;
+	private final String role;
 }

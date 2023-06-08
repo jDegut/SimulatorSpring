@@ -32,6 +32,29 @@ public class ActionService implements IActionService{
 	@Autowired
 	private MissionMapper missionMapper;
 
+	/**
+	 * Get all actions
+	 * @return
+	 */
+	@Override
+	public List<ActionDto> getAllActions() {
+		return actionRepository.findAll().stream()
+				.map(actionMapper::toDto)
+				.toList();
+	}
+
+	@Override
+	public List<ActionDto> getAllActionsById(List<Integer> ids) {
+			return actionRepository.findAllById(ids).stream()
+				.map(actionMapper::toDto)
+				.toList();
+	}
+
+	/**
+	 * Get all actions of a mission
+	 * @param missionDto
+	 * @return
+	 */
 	@Override
 	public List<ActionDto> getAllActionByMission(MissionDto missionDto) {
 		Mission mission = missionMapper.toEntity(missionDto);
@@ -40,6 +63,11 @@ public class ActionService implements IActionService{
 		return actions.stream().map(actionMapper::toDto).toList();
 	}
 
+	/**
+	 * Get all actions that are not in a mission (add a new action to a mission)
+	 * @param missionDto
+	 * @return
+	 */
 	@Override
 	public List<ActionDto> getAllOtherActionByMission(MissionDto missionDto) {
 		Mission mission = missionMapper.toEntity(missionDto);
@@ -50,6 +78,11 @@ public class ActionService implements IActionService{
 		return allActions.stream().map(actionMapper::toDto).toList();
 	}
 
+	/**
+	 * Add an action to a mission
+	 * @param mission
+	 * @param actionDto
+	 */
 	@Override
 	public void addToMission(Mission mission, ActionDto actionDto) {
 		Action action = actionRepository.findById(actionDto.getId())
@@ -72,6 +105,11 @@ public class ActionService implements IActionService{
 		}
 	}
 
+	/**
+	 * Remove an action from a mission (idAction)
+	 * @param mission
+	 * @param actionId
+	 */
 	@Override
 	public void removeAction(Mission mission, int actionId) {
 		Action action = actionRepository.findById(actionId)
@@ -81,6 +119,11 @@ public class ActionService implements IActionService{
 		actionMissionRepository.deleteAllInBatch(actionMissions);
 	}
 
+	/**
+	 * Find all actions with hierarchy (baseAction -> child -> child -> null ?)
+	 * @param actionId
+	 * @return
+	 */
 	private List<Action> findActionMissionWithHierarchy(int actionId) {
 		List<Action> actions = new ArrayList<>();
 		Action action = actionRepository.findById(actionId)
@@ -92,6 +135,10 @@ public class ActionService implements IActionService{
 		return actions;
 	}
 
+	/**
+	 * Delete all actions of a mission (to delete a mission after)
+	 * @param mission
+	 */
 	@Override
 	public void deleteAllActionMission(Mission mission) {
 		List<ActionMission> actionMissions = actionMissionRepository.findAllByFkMission(mission);

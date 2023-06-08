@@ -27,6 +27,10 @@ public class MissionService implements IMissionService{
 	@Autowired
 	private MissionMapper missionMapper;
 
+	/**
+	 * Get all missions with their actions (ActionDtos in MissionDtos)
+	 * @return
+	 */
 	@Override
 	public List<MissionDto> findAllMissions() {
 		List<Mission> missions = missionRepository.findAll();
@@ -40,6 +44,11 @@ public class MissionService implements IMissionService{
 		return missionDtos;
 	}
 
+	/**
+	 * Get a mission with its actions (ActionDtos in MissionDto)
+	 * @param id
+	 * @return
+	 */
 	@Override
 	public MissionDto findMissionById(int id) {
 		Mission mission = missionRepository.findById(id)
@@ -51,12 +60,32 @@ public class MissionService implements IMissionService{
 	}
 
 	@Override
+	public void createMission(MissionDto missionDto, List<Integer> actionIds) {
+		List<ActionDto> actionDtos = actionService.getAllActionsById(actionIds);
+		Mission mission = missionMapper.toEntity(missionDto);
+		missionRepository.save(mission);
+		for (ActionDto actionDto : actionDtos) {
+			actionService.addToMission(mission, actionDto);
+		}
+	}
+
+	/**
+	 * Add an action to a mission
+	 * @param id
+	 * @param actionDto
+	 */
+	@Override
 	public void addToMission(int id, ActionDto actionDto) {
 		Mission mission = missionRepository.findById(id)
 				.orElseThrow(() -> new MissionException("Mission not found"));
 		actionService.addToMission(mission, actionDto);
 	}
 
+	/**
+	 * Remove an action from a mission
+	 * @param missionId
+	 * @param actionId
+	 */
 	@Override
 	public void removeAction(int missionId, int actionId) {
 		Mission mission = missionRepository.findById(missionId)
@@ -64,6 +93,13 @@ public class MissionService implements IMissionService{
 		actionService.removeAction(mission, actionId);
 	}
 
+	/**
+	 * Delete a mission
+	 * 1 - Delete all actions of the mission
+	 * 2 - Delete all inscriptions of the mission
+	 * 3 - Delete the mission (not working for an unknown reason)
+	 * @param id
+	 */
 	@Override
 	public void deleteMission(int id) {
 		Mission mission = missionRepository.findById(id)

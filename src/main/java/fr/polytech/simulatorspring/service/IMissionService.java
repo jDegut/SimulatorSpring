@@ -11,7 +11,9 @@ public interface IMissionService {
 
 	MissionDto findMissionById(int id);
 
-	void addToMission(int id, ActionDto actionDto);
+    void createMission(MissionDto missionDto, List<Integer> actionIds);
+
+    void addToMission(int id, ActionDto actionDto);
 
     void removeAction(int missionId, int actionId);
 

@@ -20,8 +20,14 @@
                     </li>
                     </sec:authorize>
                     <sec:authorize access="hasAuthority('admin')">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/mission">Missions</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Missions
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/mission">Gérer les missions</a></li>
+                                <li><a class="dropdown-item" href="/mission/create">Créer une mission</a></li>
+                            </ul>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
