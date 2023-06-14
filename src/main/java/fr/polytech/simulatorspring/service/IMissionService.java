@@ -2,6 +2,7 @@ package fr.polytech.simulatorspring.service;
 
 import fr.polytech.simulatorspring.dto.ActionDto;
 import fr.polytech.simulatorspring.dto.MissionDto;
+import fr.polytech.simulatorspring.dto.UserDto;
 
 import java.util.List;
 
@@ -11,7 +12,9 @@ public interface IMissionService {
 
 	MissionDto findMissionById(int id);
 
-    void createMission(MissionDto missionDto, List<Integer> actionIds);
+	List<MissionDto> findMissionsByUser(UserDto userDto);
+
+	void createMission(MissionDto missionDto, List<Integer> actionIds);
 
     void addToMission(int id, ActionDto actionDto);
 

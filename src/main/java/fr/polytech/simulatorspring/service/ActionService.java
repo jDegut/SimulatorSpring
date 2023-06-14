@@ -27,6 +27,12 @@ public class ActionService implements IActionService{
 	private ActionMissionRepository actionMissionRepository;
 
 	@Autowired
+	private InscriptionService inscriptionService;
+
+	@Autowired
+	private IndicatorService indicatorService;
+
+	@Autowired
 	private ActionMapper actionMapper;
 
 	@Autowired
@@ -79,6 +85,17 @@ public class ActionService implements IActionService{
 	}
 
 	/**
+	 * Get an action by its id
+	 * @param id
+	 * @return
+	 */
+	@Override
+	public ActionDto getAction(int id) {
+		return actionMapper.toDto(actionRepository.findById(id)
+				.orElseThrow(() -> new ActionException("Action not found")));
+	}
+
+	/**
 	 * Add an action to a mission
 	 * @param mission
 	 * @param actionDto
@@ -106,14 +123,24 @@ public class ActionService implements IActionService{
 	}
 
 	/**
+	 * Create an action
+	 * @param actionDto
+	 */
+	@Override
+	public void createAction(ActionDto actionDto) {
+		Action action = actionMapper.toEntity(actionDto);
+		if(actionDto.getPreviousActionId() == null)
+			action.setFkAction(null);
+		actionRepository.save(action);
+	}
+
+	/**
 	 * Remove an action from a mission (idAction)
 	 * @param mission
 	 * @param actionId
 	 */
 	@Override
 	public void removeAction(Mission mission, int actionId) {
-		Action action = actionRepository.findById(actionId)
-				.orElseThrow(() -> new ActionException("Action not found"));
 		List<Action> actionMissionsWithHierarchy = findActionMissionWithHierarchy(actionId);
 		List<ActionMission> actionMissions = actionMissionRepository.findAllByFkMissionAndFkActionIn(mission, actionMissionsWithHierarchy);
 		actionMissionRepository.deleteAllInBatch(actionMissions);
@@ -143,5 +170,29 @@ public class ActionService implements IActionService{
 	public void deleteAllActionMission(Mission mission) {
 		List<ActionMission> actionMissions = actionMissionRepository.findAllByFkMission(mission);
 		actionMissionRepository.deleteAllInBatch(actionMissions);
+	}
+
+	@Override
+	public void deleteAction(int id) {
+		Action action = actionRepository.findById(id)
+				.orElseThrow(() -> new ActionException("Action not found"));
+		deleteAllMissionAction(action);
+		indicatorService.deleteAllActionIndicator(action);
+		inscriptionService.deleteActionInscriptions(action);
+		deleteActionParent(action);
+		actionRepository.delete(action);
+	}
+
+	private void deleteAllMissionAction(Action action) {
+		List<ActionMission> actionMissions = actionMissionRepository.findAllByFkAction(action);
+		actionMissionRepository.deleteAllInBatch(actionMissions);
+	}
+
+	private void deleteActionParent(Action action) {
+		Action parent = actionRepository.findByFkAction(action);
+		if(parent == null)
+			return;
+		parent.setFkAction(null);
+		actionRepository.save(parent);
 	}
 }

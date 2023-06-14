@@ -1,8 +1,10 @@
 package fr.polytech.simulatorspring.service;
 
+import fr.polytech.simulatorspring.domain.Inscription;
 import fr.polytech.simulatorspring.domain.Mission;
 import fr.polytech.simulatorspring.dto.ActionDto;
 import fr.polytech.simulatorspring.dto.MissionDto;
+import fr.polytech.simulatorspring.dto.UserDto;
 import fr.polytech.simulatorspring.exception.MissionException;
 import fr.polytech.simulatorspring.mapper.MissionMapper;
 import fr.polytech.simulatorspring.repository.MissionRepository;
@@ -34,15 +36,9 @@ public class MissionService implements IMissionService{
 	@Override
 	public List<MissionDto> findAllMissions() {
 		List<Mission> missions = missionRepository.findAll();
-		List<MissionDto> missionDtos = new ArrayList<>();
-		for (Mission mission : missions) {
-			MissionDto missionDto = missionMapper.toDto(mission);
-			List<ActionDto> actionDtos = actionService.getAllActionByMission(missionDto);
-			missionDto.setActions(actionDtos);
-			missionDtos.add(missionDto);
-		}
-		return missionDtos;
+		return getAllActionsOfMissions(missions);
 	}
+
 
 	/**
 	 * Get a mission with its actions (ActionDtos in MissionDto)
@@ -59,6 +55,50 @@ public class MissionService implements IMissionService{
 		return missionDto;
 	}
 
+	/**
+	 * Get all missions of a user with their actions (ActionDtos in MissionDtos)
+	 * @param userDto
+	 * @return
+	 */
+	@Override
+	public List<MissionDto> findMissionsByUser(UserDto userDto) {
+		List<Mission> missions = inscriptionService.findAllInscriptionsByUser(userDto.getId()).stream()
+				.map(Inscription::getFkMission)
+				.toList();
+		return getAllActionsOfMissions(missions);
+	}
+
+	public List<MissionDto> getAllMissionsNotInscribed(UserDto userDto) {
+		List<Mission> missions = inscriptionService.findAllInscriptionsByUser(userDto.getId()).stream()
+				.map(Inscription::getFkMission)
+				.toList();
+		List<MissionDto> allMissions = findAllMissions();
+		return allMissions.stream()
+				.filter(missionDto -> !missions.contains(missionMapper.toEntity(missionDto)))
+				.toList();
+	}
+
+	/**
+	 * Set actions of a mission
+	 * @param missions
+	 * @return
+	 */
+	private List<MissionDto> getAllActionsOfMissions(List<Mission> missions) {
+		List<MissionDto> missionDtos = new ArrayList<>();
+		for(Mission mission : missions) {
+			MissionDto missionDto = missionMapper.toDto(mission);
+			List<ActionDto> actionDtos = actionService.getAllActionByMission(missionDto);
+			missionDto.setActions(actionDtos);
+			missionDtos.add(missionDto);
+		}
+		return missionDtos;
+	}
+
+	/**
+	 * Create a mission with its actions
+	 * @param missionDto
+	 * @param actionIds
+	 */
 	@Override
 	public void createMission(MissionDto missionDto, List<Integer> actionIds) {
 		List<ActionDto> actionDtos = actionService.getAllActionsById(actionIds);

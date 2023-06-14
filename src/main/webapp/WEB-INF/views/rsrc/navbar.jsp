@@ -15,9 +15,15 @@
                 </li>
                 <sec:authorize access="isAuthenticated()">
                     <sec:authorize access="hasAuthority('learner')">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/mission/me">Mes missions</a>
-                    </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Mes inscriptions
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/inscription">Voir</a></li>
+                                <li><a class="dropdown-item" href="/inscription/add">S'inscrire à une nouvelle mission</a></li>
+                            </ul>
+                        </li>
                     </sec:authorize>
                     <sec:authorize access="hasAuthority('admin')">
                         <li class="nav-item dropdown">
@@ -38,14 +44,8 @@
                                 <li><a class="dropdown-item" href="/action/add">Créer une action</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Apprenants
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/user">Gérer un apprenant</a></li>
-                                <li><a class="dropdown-item" href="/user/add">Enregistrer un apprenant</a></li>
-                            </ul>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/user">Utilisateurs</a>
                         </li>
                     </sec:authorize>
                     <li class="nav-item">

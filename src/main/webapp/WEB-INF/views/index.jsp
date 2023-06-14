@@ -12,7 +12,7 @@
                 <h4>Bienvenue dans l'application Permis Piste !</h4>
                 <div class="col-9 mx-auto pt-3">
                     <div class="col">
-                        <h6>Nous sommes le <%= new SimpleDateFormat("d MMMMM yyyy HH:mm:ss z").format(new Date())%></h6>
+                        <h6>Nous sommes le <%=new SimpleDateFormat("d MMMMM yyyy HH:mm:ss z").format(new Date())%></h6>
                         <br>
                         <p>Cette application vous permettra de suivre pas à pas votre apprentissage.<br>
                         En vous souhaitant une agréable visite !</p>

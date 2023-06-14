@@ -12,10 +12,8 @@
                             <th scope="col">#</th>
                             <th scope="col">Nom de la mission</th>
                             <th scope="col">Actions associées - Score minimum</th>
-                            <sec:authorize access="hasAuthority('admin')">
-                                <th scope="col">Modifier</th>
-                                <th scope="col">Supprimer</th>
-                            </sec:authorize>
+                            <th scope="col">Modifier</th>
+                            <th scope="col">Supprimer</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -28,10 +26,8 @@
                                         ${action.wording} - ${action.scoreMinimum} <br><br>
                                     </c:forEach>
                                 </td>
-                                <sec:authorize access="hasAuthority('admin')">
-                                    <td><a class="btn btn-outline-primary" href="/mission/modify/${mission.id}" role="button">Modifier</a></td>
-                                    <td><a class="btn btn-danger" href="/mission/delete/${mission.id}" role="button">Supprimer</a></td>
-                                </sec:authorize>
+                                <td><a class="btn btn-outline-primary" href="/mission/${mission.id}" role="button">Modifier</a></td>
+                                <td><a class="btn btn-danger" href="/mission/delete/${mission.id}" role="button">Supprimer</a></td>
                             </tr>
                         </c:forEach>
                     </tbody>

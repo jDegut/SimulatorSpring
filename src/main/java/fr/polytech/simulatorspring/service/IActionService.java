@@ -17,9 +17,15 @@ public interface IActionService {
 
 	List<ActionDto> getAllOtherActionByMission(MissionDto missionDto);
 
+	ActionDto getAction(int id);
+
 	void addToMission(Mission mission, ActionDto actionDto);
 
-    void removeAction(Mission mission, int actionId);
+	void createAction(ActionDto actionDto);
+
+	void removeAction(Mission mission, int actionId);
 
 	void deleteAllActionMission(Mission mission);
+
+	void deleteAction(int id);
 }

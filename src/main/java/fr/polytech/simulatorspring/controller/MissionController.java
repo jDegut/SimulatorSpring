@@ -2,21 +2,27 @@ package fr.polytech.simulatorspring.controller;
 
 import fr.polytech.simulatorspring.dto.ActionDto;
 import fr.polytech.simulatorspring.dto.MissionDto;
+import fr.polytech.simulatorspring.dto.UserDto;
+import fr.polytech.simulatorspring.exception.UserException;
 import fr.polytech.simulatorspring.service.ActionService;
 import fr.polytech.simulatorspring.service.MissionService;
+import fr.polytech.simulatorspring.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
 @CrossOrigin
 @RequestMapping("/mission")
 public class MissionController {
+
+	private static final Logger logger = LoggerFactory.getLogger(MissionController.class);
 
 	@Autowired
 	private MissionService missionService;
@@ -27,7 +33,8 @@ public class MissionController {
 	@GetMapping
 	public ModelAndView listAllMissions() {
 		List<MissionDto> missionDtos = missionService.findAllMissions();
-		return new ModelAndView("mission/missions").addObject("missions", missionDtos);
+		return new ModelAndView("mission/missions")
+				.addObject("missions", missionDtos);
 	}
 
 	@GetMapping("/create")
@@ -42,7 +49,7 @@ public class MissionController {
 		return new ModelAndView(new RedirectView("/mission"));
 	}
 
-	@GetMapping("/modify/{id}")
+	@GetMapping("/{id}")
 	public ModelAndView modifyMission(@PathVariable int id) {
 		MissionDto missionDto = missionService.findMissionById(id);
 		List<ActionDto> actionDtos = actionService.getAllOtherActionByMission(missionDto);
