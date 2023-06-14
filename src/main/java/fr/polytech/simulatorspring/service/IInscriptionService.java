@@ -12,11 +12,11 @@ public interface IInscriptionService {
 
 	List<Inscription> findAllInscriptionsByUser(int idUser);
 
-	Inscription getMissionInscription(int idUser, int idMission);
-
 	Map<MissionDto, List<InscriptionActionDto>> listAllMissionsInscriptionsActionsByUser(UserDto userDto);
 
 	InscriptionActionDto getActionInscription(int idInscription, int idAction);
+
+	void create(int idMission, UserDto userDto);
 
 	void updateScore(int idInscription, int idAction);
 

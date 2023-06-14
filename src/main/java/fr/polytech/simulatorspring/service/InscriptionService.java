@@ -39,18 +39,11 @@ public class InscriptionService implements IInscriptionService{
     @Autowired
     private MissionRepository missionRepository;
     @Autowired
-    private ActionRepository actionRepository;
-    @Autowired
     private ActionMissionRepository actionMissionRepository;
 
     @Override
     public List<Inscription> findAllInscriptionsByUser(int idUser) {
         return inscriptionRepository.findAllByFkUser_Id(idUser);
-    }
-
-    @Override
-    public Inscription getMissionInscription(int idUser, int idMission) {
-        return inscriptionRepository.findByFkUser_IdAndFkMission_Id(idUser, idMission);
     }
 
     @Override
@@ -72,6 +65,7 @@ public class InscriptionService implements IInscriptionService{
         return inscriptionActionMapper.toDto(inscriptionActionRepository.findByFkInscription_IdAndFkAction_Id(idInscription, idAction));
     }
 
+    @Override
     public void create(int idMission, UserDto userDto) {
         Inscription inscription = new Inscription();
         inscription.setFkMission(missionRepository.findById(idMission)

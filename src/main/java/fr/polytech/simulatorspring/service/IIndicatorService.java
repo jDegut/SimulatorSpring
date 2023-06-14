@@ -14,6 +14,8 @@ public interface IIndicatorService {
 
 	Map<IndicatorDto, InscriptionIndicatorDto> getAllIndicatorsActionInscription(int idInscription, int idAction);
 
+	void makeDone(int idInscription, int idAction, int idIndicator);
+
 	void createIndicator(IndicatorDto indicatorDto);
 
 	void deleteAllActionIndicator(Action action);

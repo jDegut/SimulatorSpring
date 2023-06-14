@@ -55,19 +55,7 @@ public class MissionService implements IMissionService{
 		return missionDto;
 	}
 
-	/**
-	 * Get all missions of a user with their actions (ActionDtos in MissionDtos)
-	 * @param userDto
-	 * @return
-	 */
 	@Override
-	public List<MissionDto> findMissionsByUser(UserDto userDto) {
-		List<Mission> missions = inscriptionService.findAllInscriptionsByUser(userDto.getId()).stream()
-				.map(Inscription::getFkMission)
-				.toList();
-		return getAllActionsOfMissions(missions);
-	}
-
 	public List<MissionDto> getAllMissionsNotInscribed(UserDto userDto) {
 		List<Mission> missions = inscriptionService.findAllInscriptionsByUser(userDto.getId()).stream()
 				.map(Inscription::getFkMission)

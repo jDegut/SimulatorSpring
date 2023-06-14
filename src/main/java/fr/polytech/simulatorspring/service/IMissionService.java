@@ -12,7 +12,7 @@ public interface IMissionService {
 
 	MissionDto findMissionById(int id);
 
-	List<MissionDto> findMissionsByUser(UserDto userDto);
+	List<MissionDto> getAllMissionsNotInscribed(UserDto userDto);
 
 	void createMission(MissionDto missionDto, List<Integer> actionIds);
 

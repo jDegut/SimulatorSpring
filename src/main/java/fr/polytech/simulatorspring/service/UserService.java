@@ -47,11 +47,11 @@ public class UserService implements IUserService{
 	}
 
 	@Override
-	public UserDto updateRole(UserUpdateRequest userUpdateRequest) throws UserException {
+	public void updateRole(UserUpdateRequest userUpdateRequest) throws UserException {
 		User user = userRepository.findById(userUpdateRequest.getId())
 				.orElseThrow(() -> new UserException("User not found"));
 		user.setRole(userUpdateRequest.getRole());
-		return userMapper.toDto(userRepository.save(user));
+		userMapper.toDto(userRepository.save(user));
 	}
 
 	/**

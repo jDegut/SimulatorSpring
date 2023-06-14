@@ -7,6 +7,7 @@ import fr.polytech.simulatorspring.service.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,6 +27,7 @@ public class UserController {
 	private IUserService userService;
 
 	@GetMapping("/me")
+	@PreAuthorize("hasAnyAuthority('learner', 'admin')")
 	public ModelAndView getUser() {
 		UserDto userDto = null;
 		try {
@@ -37,12 +39,14 @@ public class UserController {
 	}
 
 	@GetMapping
+	@PreAuthorize("hasAuthority('admin')")
 	public ModelAndView getUsers() {
 		List<UserDto> users = userService.getUsers();
 		return new ModelAndView("user/userList").addObject("users", users);
 	}
 
 	@PostMapping
+	@PreAuthorize("hasAuthority('admin')")
 	public ModelAndView updateUser(@ModelAttribute UserUpdateRequest userUpdateRequest, RedirectAttributes redirectAttributes) {
 		UserDto newUser;
 		String modif = null;
@@ -63,6 +67,7 @@ public class UserController {
 	}
 
 	@GetMapping("/modify/{id}")
+	@PreAuthorize("hasAuthority('admin')")
 	public ModelAndView modifyUser(@PathVariable Integer id) {
 		UserDto userDto;
 		try {
@@ -74,6 +79,7 @@ public class UserController {
 	}
 
 	@PostMapping("/role")
+	@PreAuthorize("hasAuthority('admin')")
 	public ModelAndView updateRole(@ModelAttribute UserUpdateRequest userUpdateRequest) {
 		try {
 			userService.updateRole(userUpdateRequest);
@@ -84,6 +90,7 @@ public class UserController {
 	}
 
 	@GetMapping("/delete/{id}")
+	@PreAuthorize("hasAuthority('admin')")
 	public ModelAndView deleteUser(@PathVariable Integer id) {
 		try {
 			userService.deleteUser(id);

@@ -10,6 +10,7 @@ import fr.polytech.simulatorspring.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,17 +30,16 @@ public class InscriptionController {
 	private static final Logger logger = LoggerFactory.getLogger(InscriptionController.class);
 
 	@Autowired
-	private InscriptionService inscriptionService;
+	private IInscriptionService inscriptionService;
 	@Autowired
-	private MissionService missionService;
+	private IMissionService missionService;
 	@Autowired
-	private ActionService actionService;
+	private IIndicatorService indicatorService;
 	@Autowired
-	private IndicatorService indicatorService;
-	@Autowired
-	private UserService userService;
+	private IUserService userService;
 
 	@GetMapping
+	@PreAuthorize("hasAuthority('learner')")
 	public ModelAndView listInscriptions() {
 		UserDto userDto;
 		try {
@@ -53,6 +53,7 @@ public class InscriptionController {
 	}
 
 	@GetMapping("/{idInscription}/action/{idAction}")
+	@PreAuthorize("hasAuthority('learner')")
 	public ModelAndView getUserIndicators(@PathVariable int idInscription, @PathVariable int idAction) {
 		return new ModelAndView("action/myAction")
 				.addObject("actionInscription", inscriptionService.getActionInscription(idInscription, idAction))
@@ -60,6 +61,7 @@ public class InscriptionController {
 	}
 
 	@GetMapping("/{idInscription}/action/{idAction}/indicator/{idIndicator}")
+	@PreAuthorize("hasAuthority('learner')")
 	public ModelAndView applyIndicatorDone(@PathVariable int idInscription, @PathVariable int idAction, @PathVariable int idIndicator) {
 		indicatorService.makeDone(idInscription, idAction, idIndicator);
 		inscriptionService.updateScore(idInscription, idAction);
@@ -67,6 +69,7 @@ public class InscriptionController {
 	}
 
 	@GetMapping("/add")
+	@PreAuthorize("hasAuthority('learner')")
 	public ModelAndView addInscription() {
 		UserDto userDto;
 		try {
@@ -80,6 +83,7 @@ public class InscriptionController {
 	}
 
 	@GetMapping("/add/{idMission}")
+	@PreAuthorize("hasAuthority('learner')")
 	public ModelAndView sign(@PathVariable int idMission) {
 		UserDto userDto;
 		try {

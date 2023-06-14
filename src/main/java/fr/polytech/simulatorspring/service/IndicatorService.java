@@ -2,7 +2,6 @@ package fr.polytech.simulatorspring.service;
 
 import fr.polytech.simulatorspring.domain.Action;
 import fr.polytech.simulatorspring.domain.Indicator;
-import fr.polytech.simulatorspring.domain.Inscription;
 import fr.polytech.simulatorspring.domain.InscriptionIndicator;
 import fr.polytech.simulatorspring.dto.IndicatorDto;
 import fr.polytech.simulatorspring.dto.InscriptionIndicatorDto;
@@ -59,6 +58,7 @@ public class IndicatorService implements IIndicatorService {
 		return map;
 	}
 
+	@Override
 	public void makeDone(int idInscription, int idAction, int idIndicator) {
 		InscriptionIndicator inscriptionIndicator = inscriptionIndicatorRepository.findByFkInscriptionAndFkActionAndFkIndicator(idInscription, idAction, idIndicator);
 		inscriptionIndicator.setDone(!inscriptionIndicator.getDone());
