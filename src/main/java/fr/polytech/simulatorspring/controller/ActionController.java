@@ -27,8 +27,7 @@ public class ActionController {
 	@PreAuthorize("hasAuthority('admin')")
 	public ModelAndView listActions() {
 		return new ModelAndView("action/actions")
-				.addObject("actions", actionService.getAllActions())
-				.addObject("indicators", indicatorService.getAllIndicators());
+				.addObject("actions", actionService.getAllActions());
 	}
 
 	@GetMapping("/{id}")
