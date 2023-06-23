@@ -43,16 +43,24 @@ public class ActionService implements IActionService{
      */
     @Override
     public List<ActionDto> getAllActions() {
-        return actionRepository.findAll().stream()
+        List<ActionDto> actionDtos = actionRepository.findAll().stream()
                 .map(actionMapper::toDto)
                 .toList();
+        for(ActionDto actionDto : actionDtos){
+            actionDto.setIndicators(indicatorService.getAllIndicatorsAction(actionDto.getId()));
+        }
+        return actionDtos;
     }
 
     @Override
     public List<ActionDto> getAllActionsById(List<Integer> ids) {
-        return actionRepository.findAllById(ids).stream()
+        List<ActionDto> actionDtos = actionRepository.findAllById(ids).stream()
                 .map(actionMapper::toDto)
                 .toList();
+        for(ActionDto actionDto : actionDtos){
+            actionDto.setIndicators(indicatorService.getAllIndicatorsAction(actionDto.getId()));
+        }
+        return actionDtos;
     }
 
     /**
@@ -65,7 +73,11 @@ public class ActionService implements IActionService{
         Mission mission = missionMapper.toEntity(missionDto);
         List<Action> actions = actionMissionRepository.findAllByFkMission(mission).stream()
                 .map(ActionMission::getFkAction).toList();
-        return actions.stream().map(actionMapper::toDto).toList();
+        List<ActionDto> actionDtos = actions.stream().map(actionMapper::toDto).toList();
+        for(ActionDto actionDto : actionDtos){
+            actionDto.setIndicators(indicatorService.getAllIndicatorsAction(actionDto.getId()));
+        }
+        return actionDtos;
     }
 
     /**
@@ -80,7 +92,11 @@ public class ActionService implements IActionService{
                 .map(ActionMission::getFkAction).toList();
         List<Action> allActions = actionRepository.findAll();
         allActions.removeAll(actions);
-        return allActions.stream().map(actionMapper::toDto).toList();
+        List<ActionDto> actionDtos = allActions.stream().map(actionMapper::toDto).toList();
+        for(ActionDto actionDto : actionDtos){
+            actionDto.setIndicators(indicatorService.getAllIndicatorsAction(actionDto.getId()));
+        }
+        return actionDtos;
     }
 
     /**
@@ -90,8 +106,10 @@ public class ActionService implements IActionService{
      */
     @Override
     public ActionDto getAction(int id) {
-        return actionMapper.toDto(actionRepository.findById(id)
+        ActionDto actionDto =actionMapper.toDto(actionRepository.findById(id)
                 .orElseThrow(() -> new ActionException("Action not found")));
+        actionDto.setIndicators(indicatorService.getAllIndicatorsAction(id));
+        return actionDto;
     }
 
     /**

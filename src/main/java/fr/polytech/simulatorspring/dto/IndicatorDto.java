@@ -18,5 +18,5 @@ public class IndicatorDto implements Serializable {
     private final Integer valueIfCheck;
     private final Integer valueIfUnCheck;
 
-    private InscriptionIndicatorDto inscriptionIndicatorDto; // Field for get InscriptionIndicator for this indicator
+    private InscriptionIndicatorDto inscriptionIndicatorDto; // Field to get InscriptionIndicator for this indicator
 }

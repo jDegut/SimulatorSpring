@@ -35,17 +35,15 @@ public class ActionController {
         return ResponseEntity.ok(actions);
     }
 
-    //TODO: transformer ActionDto pour avoir la liste des indicateurs dedans et renvoyer l'actionDto en elle meme
+
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<?> getAction(@PathVariable int id) {
-        List<IndicatorDto> indicatorDto;
         try {
-            indicatorDto = indicatorService.getAllIndicatorsAction(id);
+            return ResponseEntity.ok(actionService.getAction(id));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-        return ResponseEntity.ok(indicatorDto);
     }
 
 
