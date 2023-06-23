@@ -12,9 +12,9 @@ import fr.polytech.simulatorspring.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.*;
 
 @Service
 public class InscriptionService implements IInscriptionService{
@@ -47,17 +47,17 @@ public class InscriptionService implements IInscriptionService{
     }
 
     @Override
-    public Map<MissionDto, List<InscriptionActionDto>> listAllMissionsInscriptionsActionsByUser(UserDto userDto) {
+    public List<MissionDto> listAllMissionsInscriptionsActionsByUser(UserDto userDto) {
         List<Inscription> inscriptions = findAllInscriptionsByUser(userDto.getId());
-        Map<MissionDto, List<InscriptionActionDto>> map = new HashMap<>();
+        List<MissionDto> list = new ArrayList<>();
         for(Inscription inscription : inscriptions) {
-            map.put(missionMapper.toDto(inscription.getFkMission()),
-                    inscriptionActionRepository.findAllByFkInscription(inscription).stream()
+            MissionDto missionDto = missionMapper.toDto(inscription.getFkMission());
+            missionDto.setInscriptionActions(inscriptionActionRepository.findAllByFkInscription(inscription).stream()
                     .map(inscriptionActionMapper::toDto)
-                    .toList()
-            );
+                    .toList());
+            list.add(missionDto);
         }
-        return map;
+        return list;
     }
 
     @Override
@@ -71,6 +71,7 @@ public class InscriptionService implements IInscriptionService{
         inscription.setFkMission(missionRepository.findById(idMission)
                 .orElseThrow(() -> new MissionException("Mission not found")));
         inscription.setFkUser(userMapper.toEntity(userDto));
+        inscription.setDate(LocalDate.now());
         inscriptionRepository.save(inscription);
 
         List<Action> actions = actionMissionRepository.findAllByFkMission(inscription.getFkMission()).stream()

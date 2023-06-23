@@ -14,5 +14,10 @@ public class MissionDto implements Serializable {
 	private final String wording;
 	private List<ActionDto> actions;
 
-	private List<ActionDto> otherActions; // Field for get All other actions not in the mission
+	private List<ActionDto> otherActions; // Field to get All other actions not in the mission
+	private List<InscriptionActionDto> inscriptionActions; // Field to get All inscription to the mission
+
+	public void setInscriptionActions(List<InscriptionActionDto> inscriptionActions) {
+		this.inscriptionActions = inscriptionActions;
+	}
 }

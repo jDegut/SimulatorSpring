@@ -14,7 +14,7 @@ public interface IInscriptionService {
 
 	List<Inscription> findAllInscriptionsByUser(int idUser);
 
-	Map<MissionDto, List<InscriptionActionDto>> listAllMissionsInscriptionsActionsByUser(UserDto userDto);
+	List<MissionDto> listAllMissionsInscriptionsActionsByUser(UserDto userDto);
 
 	InscriptionActionDto getActionInscription(int idInscription, int idAction);
 
