@@ -5,10 +5,7 @@ import fr.polytech.simulatorspring.service.IIndicatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
@@ -17,14 +14,14 @@ public class IndicatorController {
     @Autowired
     private IIndicatorService indicatorService;
 
-    @PostMapping("/create")
+    @PutMapping
     @PreAuthorize("hasAuthority('admin')")
-    public ResponseEntity<?> createIndicator(IndicatorDto indicatorDto) {
+    public ResponseEntity<?> createIndicator(@RequestBody IndicatorDto indicatorDto) {
         try {
             indicatorService.createIndicator(indicatorDto);
+            return ResponseEntity.ok("Indicateur créé");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-        return ResponseEntity.ok("Indicateur créé");
     }
 }
