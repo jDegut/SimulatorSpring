@@ -16,4 +16,5 @@ public interface ActionMissionRepository extends JpaRepository<ActionMission, Ac
     List<ActionMission> findAllByFkAction(Action fkAction);
 
     List<ActionMission> findAllByFkMissionAndFkActionIn(Mission fkMission, Collection<Action> fkAction);
+
 }

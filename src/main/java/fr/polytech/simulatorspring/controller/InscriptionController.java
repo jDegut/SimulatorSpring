@@ -75,7 +75,7 @@ public class InscriptionController {
 
     @GetMapping("/notInscribed")
     @PreAuthorize("hasAuthority('learner')")
-    public ResponseEntity<?> addInscription(){
+    public ResponseEntity<?> getMissionsNotInscribed(){
         try{
             UserDto userDto = userService.getUser();
             return ResponseEntity.ok(missionService.getAllMissionsNotInscribed(userDto));

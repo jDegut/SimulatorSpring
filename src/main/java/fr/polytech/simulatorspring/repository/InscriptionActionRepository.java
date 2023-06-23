@@ -19,4 +19,5 @@ public interface InscriptionActionRepository extends JpaRepository<InscriptionAc
     InscriptionAction findAllByFkInscriptionAndFkAction_Id(Inscription inscription, int idAction);
 
     InscriptionAction findByFkInscription_IdAndFkAction_Id(int idInscription, int idAction);
+
 }

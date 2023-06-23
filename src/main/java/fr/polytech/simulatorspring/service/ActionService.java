@@ -194,8 +194,8 @@ public class ActionService implements IActionService{
         Action action = actionRepository.findById(id)
                 .orElseThrow(() -> new ActionException("Action not found"));
         deleteAllMissionAction(action);
-        indicatorService.deleteAllActionIndicator(action);
         inscriptionService.deleteActionInscriptions(action);
+        indicatorService.deleteAllActionIndicator(action);
         deleteActionParent(action);
         actionRepository.delete(action);
     }
@@ -206,11 +206,13 @@ public class ActionService implements IActionService{
     }
 
     private void deleteActionParent(Action action) {
-        Action parent = actionRepository.findByFkAction(action);
-        if(parent == null)
-            return;
-        parent.setFkAction(null);
-        actionRepository.save(parent);
+        List<Action> parents = actionRepository.findAllByFkAction(action);
+        for(Action parent : parents) {
+            if (parent == null)
+                return;
+            parent.setFkAction(null);
+            actionRepository.save(parent);
+        }
     }
 
 

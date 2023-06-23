@@ -83,6 +83,7 @@ public class UserController {
 		try {
 			userDto = userService.getUserById(id);
 		} catch (UserException e) {
+			logger.error(e.getMessage());
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 		return ResponseEntity.ok(userDto);
@@ -94,7 +95,8 @@ public class UserController {
 		try {
 			userService.updateRole(userUpdateRequest);
 		} catch (UserException e) {
-			ResponseEntity.badRequest().body(e.getMessage());
+			logger.error(e.getMessage());
+			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 		return ResponseEntity.ok("Rôle changé avec succès !");
 	}

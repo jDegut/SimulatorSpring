@@ -69,16 +69,4 @@ public class ActionController {
         }
     }
 
-    @DeleteMapping("/{idAction}/{idIndicator}")
-    @PreAuthorize("hasAuthority('admin')")
-    public ResponseEntity<?> removeIndicator(@PathVariable int idAction, @PathVariable int idIndicator) {
-        try{
-            actionService.deleteAction(idAction);
-            indicatorService.deleteIndicator(idIndicator);
-            return ResponseEntity.ok("Indicateur retiré");
-        }catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
-
 }

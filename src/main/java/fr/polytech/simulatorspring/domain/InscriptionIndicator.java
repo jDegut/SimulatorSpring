@@ -12,14 +12,17 @@ public class InscriptionIndicator {
 	@Column(name = "id", nullable = false)
 	private Integer id;
 
-	@Column(name = "fk_inscription", nullable = false)
-	private Integer fkInscription;
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "fk_inscription", nullable = false)
+	private Inscription fkInscription;
 
-	@Column(name = "fk_action", nullable = false)
-	private Integer fkAction;
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "fk_action", nullable = false)
+	private Action fkAction;
 
-	@Column(name = "fk_indicator", nullable = false)
-	private Integer fkIndicator;
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "fk_indicator", nullable = false)
+	private Indicator fkIndicator;
 
 	@Column(name = "done")
 	private Boolean done;

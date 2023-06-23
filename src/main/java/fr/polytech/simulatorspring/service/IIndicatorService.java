@@ -19,4 +19,5 @@ public interface IIndicatorService {
     void deleteAllActionIndicator(Action action);
 
     void deleteIndicator(int idIndicator);
+
 }

@@ -78,6 +78,8 @@ public class IndicatorService implements IIndicatorService {
 
 	@Override
 	public void deleteIndicator(int idIndicator) {
+		inscriptionIndicatorRepository.deleteAllInBatch(inscriptionIndicatorRepository.findAllByFkIndicator_Id(idIndicator));
 		indicatorRepository.deleteById(idIndicator);
 	}
+
 }

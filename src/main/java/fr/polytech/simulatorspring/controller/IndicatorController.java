@@ -24,4 +24,15 @@ public class IndicatorController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    @DeleteMapping("/{idIndicator}")
+    @PreAuthorize("hasAuthority('admin')")
+    public ResponseEntity<?> removeIndicator(@PathVariable int idIndicator) {
+
+        try{
+            indicatorService.deleteIndicator(idIndicator);
+            return ResponseEntity.ok("Indicateur supprimé");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

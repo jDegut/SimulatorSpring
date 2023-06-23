@@ -85,9 +85,9 @@ public class InscriptionService implements IInscriptionService{
             List<Indicator> indicators = indicatorRepository.findAllByFkAction_Id(action.getId());
             for(Indicator indicator : indicators) {
                 InscriptionIndicator inscriptionIndicator = new InscriptionIndicator();
-                inscriptionIndicator.setFkInscription(inscription.getId());
-                inscriptionIndicator.setFkAction(action.getId());
-                inscriptionIndicator.setFkIndicator(indicator.getId());
+                inscriptionIndicator.setFkInscription(inscription);
+                inscriptionIndicator.setFkAction(action);
+                inscriptionIndicator.setFkIndicator(indicator);
                 inscriptionIndicator.setDone(false);
                 inscriptionIndicatorRepository.save(inscriptionIndicator);
             }
@@ -121,7 +121,11 @@ public class InscriptionService implements IInscriptionService{
     public void deleteUserInscriptions(int idUser) {
         List<Inscription> inscriptions = inscriptionRepository.findAllByFkUser_Id(idUser);
         List<InscriptionAction> inscriptionActions = inscriptionActionRepository.findAllByFkInscriptionIn(inscriptions);
+        List<InscriptionIndicator> inscriptionIndicators = inscriptionIndicatorRepository.findAllByFkInscriptionIn(inscriptions.stream()
+                .map(Inscription::getId)
+                .toList());
         inscriptionActionRepository.deleteAllInBatch(inscriptionActions);
+        inscriptionIndicatorRepository.deleteAllInBatch(inscriptionIndicators);
         inscriptionRepository.deleteAllInBatch(inscriptions);
     }
 
@@ -147,5 +151,8 @@ public class InscriptionService implements IInscriptionService{
     public void deleteActionInscriptions(Action action) {
         List<InscriptionAction> inscriptionActions = inscriptionActionRepository.findAllByFkAction(action);
         inscriptionActionRepository.deleteAllInBatch(inscriptionActions);
+        List<InscriptionIndicator> inscriptionIndicators = inscriptionIndicatorRepository.findAllByFkAction(action);
+        inscriptionIndicatorRepository.deleteAllInBatch(inscriptionIndicators);
     }
+
 }

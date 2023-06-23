@@ -13,3 +13,4 @@ public interface InscriptionRepository extends JpaRepository<Inscription, Intege
 
     Inscription findByFkUser_IdAndFkMission_Id(int idUser, int idMission);
 }
+

@@ -11,4 +11,5 @@ public interface IndicatorRepository extends JpaRepository<Indicator, Integer> {
     List<Indicator> findAllByFkAction(Action action);
 
     List<Indicator> findAllByFkAction_Id(int idAction);
+
 }
