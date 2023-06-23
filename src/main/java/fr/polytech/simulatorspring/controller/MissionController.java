@@ -32,6 +32,7 @@ public class MissionController {
         }
     }
 
+    /* Faire une requete get sur les actions
     @GetMapping("/create")
     @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<?> createMission(){
@@ -41,9 +42,9 @@ public class MissionController {
         catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-    }
+    }*/
 
-    @PostMapping("/create")
+    @PutMapping
     @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<?> createMission(@RequestBody MissionDto missionDto, @RequestParam("actionList") List<Integer> actionIds ){
         try{
@@ -57,7 +58,7 @@ public class MissionController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('admin')")
-    public ResponseEntity<?> modifyMission(@PathVariable int id){
+    public ResponseEntity<?> getMission(@PathVariable int id){
         try{
             MissionDto missionDto = missionService.findMissionById(id);
             missionDto.setOtherActions(actionService.getAllOtherActionByMission(missionDto));
@@ -68,9 +69,12 @@ public class MissionController {
         }
     }
 
-    @PostMapping("/{id}/action/add")
+    @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<?> addActionToMission(@PathVariable int id, @RequestBody ActionDto actionDto){
+        if(actionDto == null){
+            return ResponseEntity.badRequest().body("Action non valide");
+        }
         try{
             missionService.addToMission(id, actionDto);
             return ResponseEntity.ok("Action ajoutée");
@@ -80,9 +84,9 @@ public class MissionController {
         }
     }
 
-    @GetMapping("/{id}/remove/{actionId}")
+    @DeleteMapping("/{id}/{actionId}")
     @PreAuthorize("hasAuthority('admin')")
-    public ResponseEntity<?> removeActionToMission(@PathVariable int id, @PathVariable int actionId, @RequestBody ActionDto actionDto){
+    public ResponseEntity<?> removeActionToMission(@PathVariable int id, @PathVariable int actionId){
         try{
             missionService.removeAction(id, actionId);
             return ResponseEntity.ok("Action supprimée");
@@ -92,7 +96,7 @@ public class MissionController {
         }
     }
 
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<?> deleteMission(@PathVariable int id){
         try{
