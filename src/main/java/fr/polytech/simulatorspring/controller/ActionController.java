@@ -35,9 +35,10 @@ public class ActionController {
         return ResponseEntity.ok(actions);
     }
 
+    //TODO: transformer ActionDto pour avoir la liste des indicateurs dedans et renvoyer l'actionDto en elle meme
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('admin')")
-    public ResponseEntity<?> modifyAction(@PathVariable int id) {
+    public ResponseEntity<?> getAction(@PathVariable int id) {
         List<IndicatorDto> indicatorDto;
         try {
             indicatorDto = indicatorService.getAllIndicatorsAction(id);
@@ -47,54 +48,39 @@ public class ActionController {
         return ResponseEntity.ok(indicatorDto);
     }
 
-    @GetMapping("/add")
-    @PreAuthorize("hasAuthority('admin')")
-    public ResponseEntity<?> addAction() {
-        List<ActionDto> actions;
-        try {
-            actions = actionService.getAllActions();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-        return ResponseEntity.ok(actions);
-    }
 
-    @PostMapping("/create")
+    @PutMapping
     @PreAuthorize("hasAuthority('admin')")
-    public ResponseEntity<?> createAction(ActionDto actionDto) {
+    public ResponseEntity<?> createAction(@RequestBody ActionDto actionDto) {
         try {
             actionService.createAction(actionDto);
+            return ResponseEntity.ok("Action créée");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-        return ResponseEntity.ok("Action créée");
     }
 
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<?> deleteAction(@PathVariable int id) {
         try{
             actionService.deleteAction(id);
+            return ResponseEntity.ok("Action supprimée");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-        return ResponseEntity.ok("Action supprimée");
     }
 
-    @DeleteMapping("/{idAction}/remove/{idIndicator}")
+    @DeleteMapping("/{idAction}/{idIndicator}")
     @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<?> removeIndicator(@PathVariable int idAction, @PathVariable int idIndicator) {
         try{
             actionService.deleteAction(idAction);
-        }catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-        try{
             indicatorService.deleteIndicator(idIndicator);
+            return ResponseEntity.ok("Indicateur retiré");
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-        return ResponseEntity.ok("Indicateur retiré");
     }
 
 }
