@@ -1,6 +1,8 @@
 package fr.polytech.simulatorspring.controller;
 
 
+import fr.polytech.simulatorspring.dto.InscriptionActionDto;
+import fr.polytech.simulatorspring.dto.InscriptionIndicatorDto;
 import fr.polytech.simulatorspring.dto.UserDto;
 import fr.polytech.simulatorspring.service.IIndicatorService;
 import fr.polytech.simulatorspring.service.IInscriptionService;
@@ -49,10 +51,9 @@ public class InscriptionController {
     @PreAuthorize("hasAuthority('learner')")
     public ResponseEntity<?> getUserIndicators(@PathVariable int idInscription, @PathVariable int idAction) {
         try {
-            List<Object> retour = new ArrayList<>();
-            retour.add(inscriptionService.getActionInscription(idInscription, idAction));
-            retour.add(indicatorService.getAllIndicatorsActionInscription(idInscription, idAction));
-            return ResponseEntity.ok(retour);
+            InscriptionActionDto dto = inscriptionService.getActionInscription(idInscription, idAction);
+            dto.setIndicatorDtos(indicatorService.getAllIndicatorsActionInscription(idInscription, idAction));
+            return ResponseEntity.ok(dto);
         } catch (Exception e) {
             logger.error(e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());

@@ -59,11 +59,9 @@ public class MissionController {
     @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<?> modifyMission(@PathVariable int id){
         try{
-            List<Object> objects = new ArrayList<>();
             MissionDto missionDto = missionService.findMissionById(id);
-            objects.add(missionDto);
-            objects.add(actionService.getAllOtherActionByMission(missionDto));
-            return ResponseEntity.ok(objects);
+            missionDto.setOtherActions(actionService.getAllOtherActionByMission(missionDto));
+            return ResponseEntity.ok(missionDto);
         }
         catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());

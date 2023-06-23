@@ -13,4 +13,6 @@ public class MissionDto implements Serializable {
 	private final Integer id;
 	private final String wording;
 	private List<ActionDto> actions;
+
+	private List<ActionDto> otherActions; // Field for get All other actions not in the mission
 }
