@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * DTO for {@link InscriptionAction}
@@ -19,4 +20,6 @@ public class InscriptionActionDto implements Serializable {
 	private final Integer fkActionScoreMinimum;
 	private final Integer sort;
 	private final Integer score;
+
+	private List<IndicatorDto> indicatorDtos; // Field for get All indicators for this action
 }

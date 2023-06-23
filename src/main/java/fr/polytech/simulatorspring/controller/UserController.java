@@ -29,7 +29,7 @@ public class UserController {
 	@GetMapping("/me")
 	@PreAuthorize("hasAnyAuthority('learner', 'admin')")
 	public ResponseEntity<?> getUser() {
-		UserDto userDto = null;
+		UserDto userDto;
 		try {
 			userDto = userService.getUser();
 		} catch (UserException e) {
@@ -42,7 +42,7 @@ public class UserController {
 	@GetMapping
 	@PreAuthorize("hasAuthority('admin')")
 	public ResponseEntity<?> getUsers() {
-		List<UserDto> users = null;
+		List<UserDto> users;
 		try {
 			users = userService.getUsers();
 		} catch (Exception e) {
@@ -54,9 +54,9 @@ public class UserController {
 
 	@PostMapping
 	@PreAuthorize("hasAuthority('admin')")
-	public ResponseEntity<?> updateUser(@ModelAttribute UserUpdateRequest userUpdateRequest, RedirectAttributes redirectAttributes) {
+	public ResponseEntity<?> updateUser(@RequestBody UserUpdateRequest userUpdateRequest) {
 		UserDto newUser;
-		String modif = null;
+		String modif;
 		boolean isChanged = true;
 		try {
 			newUser = userService.updateUser(userUpdateRequest);

@@ -4,7 +4,6 @@ import fr.polytech.simulatorspring.domain.Action;
 import fr.polytech.simulatorspring.domain.Indicator;
 import fr.polytech.simulatorspring.domain.InscriptionIndicator;
 import fr.polytech.simulatorspring.dto.IndicatorDto;
-import fr.polytech.simulatorspring.dto.InscriptionIndicatorDto;
 import fr.polytech.simulatorspring.mapper.IndicatorMapper;
 import fr.polytech.simulatorspring.mapper.InscriptionIndicatorMapper;
 import fr.polytech.simulatorspring.repository.IndicatorRepository;
@@ -12,9 +11,7 @@ import fr.polytech.simulatorspring.repository.InscriptionIndicatorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class IndicatorService implements IIndicatorService {
@@ -46,16 +43,18 @@ public class IndicatorService implements IIndicatorService {
 	}
 
 	@Override
-	public Map<IndicatorDto, InscriptionIndicatorDto> getAllIndicatorsActionInscription(int idInscription, int idAction) {
+	public List<IndicatorDto> getAllIndicatorsActionInscription(int idInscription, int idAction) {
 		List<Indicator> indicators = indicatorRepository.findAllByFkAction_Id(idAction);
-		Map<IndicatorDto, InscriptionIndicatorDto> map = new HashMap<>();
-		for(Indicator indicator : indicators) {
-			map.put(indicatorMapper.toDto(indicator),
-					inscriptionIndicatorMapper.toDto(
-							inscriptionIndicatorRepository.findByFkInscriptionAndFkActionAndFkIndicator(idInscription, idAction, indicator.getId())
-					));
-		}
-		return map;
+		List<IndicatorDto> indicatorDtos = indicators.stream()
+				.map(indicatorMapper::toDto)
+				.toList();
+		indicatorDtos.forEach(indicatorDto ->
+				indicatorDto.setInscriptionIndicatorDto(inscriptionIndicatorMapper.toDto(
+								inscriptionIndicatorRepository.findByFkInscriptionAndFkActionAndFkIndicator(idInscription, idAction, indicatorDto.getId())
+						)
+				)
+		);
+		return indicatorDtos;
 	}
 
 	@Override
