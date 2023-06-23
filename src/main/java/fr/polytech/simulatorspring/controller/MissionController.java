@@ -45,7 +45,7 @@ public class MissionController {
 
     @PostMapping("/create")
     @PreAuthorize("hasAuthority('admin')")
-    public ResponseEntity<?> createMission(@ModelAttribute MissionDto missionDto, @RequestParam("actionList") List<Integer> actionIds ){
+    public ResponseEntity<?> createMission(@RequestBody MissionDto missionDto, @RequestParam("actionList") List<Integer> actionIds ){
         try{
             missionService.createMission(missionDto, actionIds);
             return ResponseEntity.ok("Mission créée");
@@ -72,7 +72,7 @@ public class MissionController {
 
     @PostMapping("/{id}/action/add")
     @PreAuthorize("hasAuthority('admin')")
-    public ResponseEntity<?> addActionToMission(@PathVariable int id, @ModelAttribute ActionDto actionDto){
+    public ResponseEntity<?> addActionToMission(@PathVariable int id, @RequestBody ActionDto actionDto){
         try{
             missionService.addToMission(id, actionDto);
             return ResponseEntity.ok("Action ajoutée");
@@ -84,7 +84,7 @@ public class MissionController {
 
     @GetMapping("/{id}/remove/{actionId}")
     @PreAuthorize("hasAuthority('admin')")
-    public ResponseEntity<?> removeActionToMission(@PathVariable int id, @PathVariable int actionId, @ModelAttribute ActionDto actionDto){
+    public ResponseEntity<?> removeActionToMission(@PathVariable int id, @PathVariable int actionId, @RequestBody ActionDto actionDto){
         try{
             missionService.removeAction(id, actionId);
             return ResponseEntity.ok("Action supprimée");
