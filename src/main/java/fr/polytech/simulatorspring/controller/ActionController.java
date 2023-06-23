@@ -47,7 +47,7 @@ public class ActionController {
     }
 
 
-    @PutMapping
+    @PostMapping("/add")
     @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<?> createAction(@RequestBody ActionDto actionDto) {
         try {

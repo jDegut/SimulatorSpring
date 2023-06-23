@@ -14,7 +14,7 @@ public class IndicatorController {
     @Autowired
     private IIndicatorService indicatorService;
 
-    @PutMapping
+    @PostMapping("/add")
     @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<?> createIndicator(@RequestBody IndicatorDto indicatorDto) {
         try {

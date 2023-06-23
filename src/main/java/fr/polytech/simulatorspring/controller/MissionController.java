@@ -44,7 +44,7 @@ public class MissionController {
         }
     }*/
 
-    @PutMapping
+    @PostMapping("/add")
     @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<?> createMission(@RequestBody MissionDto missionDto, @RequestParam("actionList") List<Integer> actionIds ){
         try{
