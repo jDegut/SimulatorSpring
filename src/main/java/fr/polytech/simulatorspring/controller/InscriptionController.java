@@ -60,7 +60,7 @@ public class InscriptionController {
         }
     }
 
-    @GetMapping("/{idInscription}/action/{idAction}/indicator/{idIndicator}")
+    @PatchMapping("/{idInscription}/action/{idAction}/indicator/{idIndicator}")
     @PreAuthorize("hasAuthority('learner')")
     public ResponseEntity<?> applyIndicatorDone(@PathVariable int idInscription, @PathVariable int idAction, @PathVariable int idIndicator) {
         try {
@@ -73,7 +73,7 @@ public class InscriptionController {
         }
     }
 
-    @GetMapping("/add")
+    @GetMapping("/notInscribed")
     @PreAuthorize("hasAuthority('learner')")
     public ResponseEntity<?> addInscription(){
         try{
@@ -85,7 +85,7 @@ public class InscriptionController {
         }
     }
 
-    @GetMapping("/add/{idMission}")
+    @PatchMapping("/{idMission}")
     @PreAuthorize("hasAuthority('learner')")
     public ResponseEntity<?> sign(@PathVariable int idMission){
         try{

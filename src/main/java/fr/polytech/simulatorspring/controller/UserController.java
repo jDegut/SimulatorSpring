@@ -52,7 +52,7 @@ public class UserController {
 		return ResponseEntity.ok(users);
 	}
 
-	@PostMapping
+	@PatchMapping
 	@PreAuthorize("hasAuthority('admin')")
 	public ResponseEntity<?> updateUser(@RequestBody UserUpdateRequest userUpdateRequest) {
 		UserDto newUser;
@@ -76,9 +76,9 @@ public class UserController {
 		}
 	}
 
-	@GetMapping("/modify/{id}")
+	@GetMapping("/{id}")
 	@PreAuthorize("hasAuthority('admin')")
-	public ResponseEntity<?> modifyUser(@PathVariable Integer id) {
+	public ResponseEntity<?> getUser(@PathVariable Integer id) {
 		UserDto userDto;
 		try {
 			userDto = userService.getUserById(id);
@@ -88,7 +88,7 @@ public class UserController {
 		return ResponseEntity.ok(userDto);
 	}
 
-	@PostMapping("/role")
+	@PatchMapping("/role")
 	@PreAuthorize("hasAuthority('admin')")
 	public ResponseEntity<?> updateRole(@ModelAttribute UserUpdateRequest userUpdateRequest) {
 		try {
@@ -99,7 +99,7 @@ public class UserController {
 		return ResponseEntity.ok("Rôle changé avec succès !");
 	}
 
-	@GetMapping("/delete/{id}")
+	@DeleteMapping("/{id}")
 	@PreAuthorize("hasAuthority('admin')")
 	public ResponseEntity<?> deleteUser(@PathVariable Integer id) {
 		try {
