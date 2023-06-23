@@ -12,6 +12,7 @@ import fr.polytech.simulatorspring.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,6 +72,7 @@ public class InscriptionService implements IInscriptionService{
         inscription.setFkMission(missionRepository.findById(idMission)
                 .orElseThrow(() -> new MissionException("Mission not found")));
         inscription.setFkUser(userMapper.toEntity(userDto));
+        inscription.setDate(LocalDate.now());
         inscriptionRepository.save(inscription);
 
         List<Action> actions = actionMissionRepository.findAllByFkMission(inscription.getFkMission()).stream()
