@@ -98,7 +98,7 @@ public class UserController {
 			logger.error(e.getMessage());
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
-		return ResponseEntity.ok("Rôle changé avec succès !");
+		return ResponseEntity.ok().build();
 	}
 
 	@DeleteMapping("/{id}")
@@ -110,7 +110,7 @@ public class UserController {
 			logger.error(e.getMessage());
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
-		return ResponseEntity.ok("Utilisateur supprimé avec succès !");
+		return ResponseEntity.ok().build();
 	}
 
 }
