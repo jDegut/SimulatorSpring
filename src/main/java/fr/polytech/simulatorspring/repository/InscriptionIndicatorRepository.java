@@ -10,8 +10,8 @@ import java.util.List;
 
 public interface InscriptionIndicatorRepository extends JpaRepository<InscriptionIndicator, Integer> {
 	List<InscriptionIndicator> findAllByFkInscriptionIn(Collection<Integer> fkInscription);
-	List<InscriptionIndicator> findAllByFkInscriptionAndFkAction(int inscription, int action);
-	InscriptionIndicator findByFkInscriptionAndFkActionAndFkIndicator(int inscription, int action, int indicator);
+	List<InscriptionIndicator> findAllByFkInscription_IdAndFkAction_Id(int inscription, int action);
+	InscriptionIndicator findByFkInscription_IdAndFkAction_IdAndFkIndicator_Id(int inscription, int action, int indicator);
 	List<InscriptionIndicator> findAllByFkAction(Action fkAction);
 	List<InscriptionIndicator> findAllByFkIndicator_Id(int fkIndicator);
 }

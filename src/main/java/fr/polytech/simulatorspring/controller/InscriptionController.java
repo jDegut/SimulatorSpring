@@ -66,7 +66,7 @@ public class InscriptionController {
         try {
             indicatorService.makeDone(idInscription, idAction, idIndicator);
             inscriptionService.updateScore(idInscription, idAction);
-            return ResponseEntity.ok("Action marquée à done");
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
             logger.error(e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -91,7 +91,7 @@ public class InscriptionController {
         try{
             UserDto userDto = userService.getUser();
             inscriptionService.create(idMission, userDto);
-            return ResponseEntity.ok("Inscription ajoutée");
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
             logger.error(e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());

@@ -70,7 +70,7 @@ public class UserController {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 		if(isChanged) {
-			return ResponseEntity.ok(modif);
+			return ResponseEntity.ok().build();
 		} else {
 			return ResponseEntity.badRequest().body(modif);
 		}
@@ -91,7 +91,7 @@ public class UserController {
 
 	@PatchMapping("/role")
 	@PreAuthorize("hasAuthority('admin')")
-	public ResponseEntity<?> updateRole(@ModelAttribute UserUpdateRequest userUpdateRequest) {
+	public ResponseEntity<?> updateRole(@RequestBody UserUpdateRequest userUpdateRequest) {
 		try {
 			userService.updateRole(userUpdateRequest);
 		} catch (UserException e) {

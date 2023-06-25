@@ -98,7 +98,7 @@ public class InscriptionService implements IInscriptionService{
     @Override
     public void updateScore(int idInscription, int idAction) {
         InscriptionAction inscriptionAction = inscriptionActionRepository.findByFkInscription_IdAndFkAction_Id(idInscription, idAction);
-        List<InscriptionIndicator> inscriptionIndicators = inscriptionIndicatorRepository.findAllByFkInscriptionAndFkAction(idInscription, idAction);
+        List<InscriptionIndicator> inscriptionIndicators = inscriptionIndicatorRepository.findAllByFkInscription_IdAndFkAction_Id(idInscription, idAction);
         List<Indicator> indicators = indicatorRepository.findAllByFkAction_Id(idAction);
         int score = 0;
         for(InscriptionIndicator inscriptionIndicator : inscriptionIndicators) {

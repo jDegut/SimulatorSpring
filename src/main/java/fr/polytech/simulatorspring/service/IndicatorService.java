@@ -50,7 +50,7 @@ public class IndicatorService implements IIndicatorService {
 				.toList();
 		indicatorDtos.forEach(indicatorDto ->
 				indicatorDto.setInscriptionIndicatorDto(inscriptionIndicatorMapper.toDto(
-								inscriptionIndicatorRepository.findByFkInscriptionAndFkActionAndFkIndicator(idInscription, idAction, indicatorDto.getId())
+								inscriptionIndicatorRepository.findByFkInscription_IdAndFkAction_IdAndFkIndicator_Id(idInscription, idAction, indicatorDto.getId())
 						)
 				)
 		);
@@ -59,7 +59,7 @@ public class IndicatorService implements IIndicatorService {
 
 	@Override
 	public void makeDone(int idInscription, int idAction, int idIndicator) {
-		InscriptionIndicator inscriptionIndicator = inscriptionIndicatorRepository.findByFkInscriptionAndFkActionAndFkIndicator(idInscription, idAction, idIndicator);
+		InscriptionIndicator inscriptionIndicator = inscriptionIndicatorRepository.findByFkInscription_IdAndFkAction_IdAndFkIndicator_Id(idInscription, idAction, idIndicator);
 		inscriptionIndicator.setDone(!inscriptionIndicator.getDone());
 		inscriptionIndicatorRepository.save(inscriptionIndicator);
 
