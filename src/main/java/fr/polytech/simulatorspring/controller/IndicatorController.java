@@ -19,7 +19,7 @@ public class IndicatorController {
     public ResponseEntity<?> createIndicator(@RequestBody IndicatorDto indicatorDto) {
         try {
             indicatorService.createIndicator(indicatorDto);
-            return ResponseEntity.ok("Indicateur créé");
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -30,7 +30,7 @@ public class IndicatorController {
 
         try{
             indicatorService.deleteIndicator(idIndicator);
-            return ResponseEntity.ok("Indicateur supprimé");
+            return ResponseEntity.ok().build();
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

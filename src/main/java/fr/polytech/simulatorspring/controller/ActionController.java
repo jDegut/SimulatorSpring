@@ -63,7 +63,7 @@ public class ActionController {
     public ResponseEntity<?> deleteAction(@PathVariable int id) {
         try{
             actionService.deleteAction(id);
-            return ResponseEntity.ok("Action supprimée");
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

@@ -103,7 +103,7 @@ public class InscriptionService implements IInscriptionService{
         int score = 0;
         for(InscriptionIndicator inscriptionIndicator : inscriptionIndicators) {
             for(Indicator indicator : indicators) {
-                if(inscriptionIndicator.getFkIndicator().equals(indicator.getId())) {
+                if(inscriptionIndicator.getFkIndicator().getId().equals(indicator.getId())) {
                     score += inscriptionIndicator.getDone() ? indicator.getValueIfCheck() : indicator.getValueIfUnCheck();
                 }
             }
