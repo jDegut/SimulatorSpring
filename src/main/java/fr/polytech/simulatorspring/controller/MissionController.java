@@ -49,7 +49,7 @@ public class MissionController {
     public ResponseEntity<?> createMission(@RequestBody MissionDto missionDto, @RequestParam("actionList") List<Integer> actionIds ){
         try{
             missionService.createMission(missionDto, actionIds);
-            return ResponseEntity.ok("Mission créée");
+            return ResponseEntity.ok().build();
         }
         catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -89,7 +89,7 @@ public class MissionController {
     public ResponseEntity<?> removeActionToMission(@PathVariable int id, @PathVariable int actionId){
         try{
             missionService.removeAction(id, actionId);
-            return ResponseEntity.ok("Action supprimée");
+            return ResponseEntity.ok().build();
         }
         catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
