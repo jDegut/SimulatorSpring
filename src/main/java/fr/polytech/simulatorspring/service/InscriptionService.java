@@ -122,9 +122,7 @@ public class InscriptionService implements IInscriptionService{
     public void deleteUserInscriptions(int idUser) {
         List<Inscription> inscriptions = inscriptionRepository.findAllByFkUser_Id(idUser);
         List<InscriptionAction> inscriptionActions = inscriptionActionRepository.findAllByFkInscriptionIn(inscriptions);
-        List<InscriptionIndicator> inscriptionIndicators = inscriptionIndicatorRepository.findAllByFkInscriptionIn(inscriptions.stream()
-                .map(Inscription::getId)
-                .toList());
+        List<InscriptionIndicator> inscriptionIndicators = inscriptionIndicatorRepository.findAllByFkInscriptionIn(inscriptions);
         inscriptionActionRepository.deleteAllInBatch(inscriptionActions);
         inscriptionIndicatorRepository.deleteAllInBatch(inscriptionIndicators);
         inscriptionRepository.deleteAllInBatch(inscriptions);
@@ -140,9 +138,7 @@ public class InscriptionService implements IInscriptionService{
     public void deleteMissionInscriptions(Mission mission) {
         List<Inscription> inscriptions = inscriptionRepository.findAllByFkMission(mission);
         List<InscriptionAction> inscriptionActions = inscriptionActionRepository.findAllByFkInscriptionIn(inscriptions);
-        List<InscriptionIndicator> inscriptionIndicators = inscriptionIndicatorRepository.findAllByFkInscriptionIn(inscriptions.stream()
-                .map(Inscription::getId)
-                .toList());
+        List<InscriptionIndicator> inscriptionIndicators = inscriptionIndicatorRepository.findAllByFkInscriptionIn(inscriptions);
         inscriptionIndicatorRepository.deleteAllInBatch(inscriptionIndicators);
         inscriptionActionRepository.deleteAllInBatch(inscriptionActions);
         inscriptionRepository.deleteAllInBatch(inscriptions);

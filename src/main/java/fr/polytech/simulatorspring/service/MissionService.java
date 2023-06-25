@@ -134,6 +134,6 @@ public class MissionService implements IMissionService{
 						.orElseThrow(() -> new MissionException("Mission not found"));
 		actionService.deleteAllActionMission(mission);
 		inscriptionService.deleteMissionInscriptions(mission);
-		missionRepository.deleteById(id);
+		missionRepository.delete(mission);
 	}
 }
