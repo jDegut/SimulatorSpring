@@ -101,7 +101,7 @@ public class MissionController {
     public ResponseEntity<?> deleteMission(@PathVariable int id){
         try{
             missionService.deleteMission(id);
-            return ResponseEntity.ok("Mission supprimée");
+            return ResponseEntity.ok().build();
         }
         catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());

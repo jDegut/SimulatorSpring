@@ -52,7 +52,7 @@ public class ActionController {
     public ResponseEntity<?> createAction(@RequestBody ActionDto actionDto) {
         try {
             actionService.createAction(actionDto);
-            return ResponseEntity.ok("Action créée");
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
