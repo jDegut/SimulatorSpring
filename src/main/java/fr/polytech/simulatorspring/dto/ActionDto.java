@@ -11,7 +11,6 @@ import java.util.List;
  * A DTO for the {@link Action} entity
  */
 @Data
-@AllArgsConstructor
 public class ActionDto implements Serializable {
 	private final Integer id;
 	private Integer previousActionId;
@@ -25,7 +24,4 @@ public class ActionDto implements Serializable {
 		this.indicators = indicators;
 	}
 
-	public int getId() {
-		return id;
-	}
 }
